@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment - CareerAI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="assessment-page">
+
+<div class="bg-particles" id="bgParticles"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <span class="logo-icon">🎓</span>
+            <span class="logo-text">Career<span class="logo-ai">AI</span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/assessment" class="active">Assessment</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        <a href="/assessment" class="nav-cta">Get Started</a>
+        <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+</nav>
+
+<div class="assessment-wrapper">
+
+    <!-- LEFT PANEL -->
+    <div class="assess-left">
+        <div class="assess-brand">
+            <div class="assess-logo">🤖</div>
+            <h2>CareerAI Assessment</h2>
+            <p>Answer honestly for the most accurate career match.</p>
+        </div>
+
+        <!-- Step progress sidebar -->
+        <div class="sidebar-steps">
+            <div class="sb-step active" id="sb1">
+                <div class="sb-icon">📚</div>
+                <div class="sb-info">
+                    <div class="sb-title">Academic</div>
+                    <div class="sb-sub">Education & grades</div>
+                </div>
+                <div class="sb-check">✓</div>
+            </div>
+            <div class="sb-line"></div>
+            <div class="sb-step" id="sb2">
+                <div class="sb-icon">🛠️</div>
+                <div class="sb-info">
+                    <div class="sb-title">Skills</div>
+                    <div class="sb-sub">Your abilities</div>
+                </div>
+                <div class="sb-check">✓</div>
+            </div>
+            <div class="sb-line"></div>
+            <div class="sb-step" id="sb3">
+                <div class="sb-icon">❤️</div>
+                <div class="sb-info">
+                    <div class="sb-title">Interests</div>
+                    <div class="sb-sub">Passions & goals</div>
+                </div>
+                <div class="sb-check">✓</div>
+            </div>
+        </div>
+
+        <!-- Tip box -->
+        <div class="assess-tip" id="assessTip">
+            <div class="tip-icon">💡</div>
+            <p id="tipText">Be honest — there are no right or wrong answers!</p>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL (form) -->
+    <div class="assess-right">
+        <div class="assess-progress-top">
+            <div class="apt-label" id="stepLabel">Step 1 of 3</div>
+            <div class="apt-bar-wrap">
+                <div class="apt-bar" id="progressBar" style="width:33%"></div>
+            </div>
+            <div class="apt-pct" id="stepPct">33%</div>
+        </div>
+
+        <form id="assessmentForm" action="/recommend" method="POST">
+
+            <!-- STEP 1 -->
+            <div class="form-step active" id="step1">
+                <div class="step-header">
+                    <span class="step-emoji">📚</span>
+                    <div>
+                        <h2>Academic Background</h2>
+                        <p>Tell us about your education and strengths.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Current education level</label>
+                    <div class="select-wrap">
+                        <select name="education_level" required>
+                            <option value="">Select level</option>
+                            <option value="high_school">High School</option>
+                            <option value="undergraduate">Undergraduate</option>
+                            <option value="postgraduate">Postgraduate</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="select-arrow">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>GPA / Grade (out of 10)</label>
+                    <input type="number" name="gpa" min="0" max="10" step="0.1" placeholder="e.g. 7.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Subject you excel in most</label>
+                    <div class="select-wrap">
+                        <select name="top_subject" required>
+                            <option value="">Select subject</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="science">Science / Physics / Chemistry</option>
+                            <option value="biology">Biology / Life Sciences</option>
+                            <option value="computers">Computers / IT</option>
+                            <option value="economics">Economics / Commerce</option>
+                            <option value="arts">Arts / Humanities</option>
+                            <option value="literature">Literature / Languages</option>
+                            <option value="social_science">Social Sciences</option>
+                        </select>
+                        <span class="select-arrow">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Analytical / logical thinking <span class="label-val" id="analyticalVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="analytical" min="1" max="10" value="5" id="analyticalRange" class="styled-range">
+                        <div class="slider-fill" id="analyticalFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>Beginner</span><span>Expert</span></div>
+                </div>
+
+                <button type="button" class="btn-next-step" onclick="goToStep(2)">
+                    Continue to Skills
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="form-step" id="step2">
+                <div class="step-header">
+                    <span class="step-emoji">🛠️</span>
+                    <div>
+                        <h2>Skills & Abilities</h2>
+                        <p>Rate your proficiency in each area.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Programming / coding skills <span class="label-val" id="codingVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="coding" min="1" max="10" value="5" id="codingRange" class="styled-range">
+                        <div class="slider-fill" id="codingFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>None</span><span>Expert</span></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Communication & leadership <span class="label-val" id="commVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="communication" min="1" max="10" value="5" id="commRange" class="styled-range">
+                        <div class="slider-fill" id="commFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>Shy</span><span>Leader</span></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Creativity & design sense <span class="label-val" id="creativeVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="creativity" min="1" max="10" value="5" id="creativeRange" class="styled-range">
+                        <div class="slider-fill" id="creativeFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>Basic</span><span>Creative</span></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Problem-solving ability <span class="label-val" id="psVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="problem_solving" min="1" max="10" value="5" id="psRange" class="styled-range">
+                        <div class="slider-fill" id="psFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>Average</span><span>Excellent</span></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Research & experimentation <span class="label-val" id="resVal">5</span>/10</label>
+                    <div class="slider-track-wrap">
+                        <input type="range" name="research" min="1" max="10" value="5" id="resRange" class="styled-range">
+                        <div class="slider-fill" id="resFill" style="width:44.4%"></div>
+                    </div>
+                    <div class="slider-labels"><span>Little</span><span>Very High</span></div>
+                </div>
+
+                <div class="step-nav-row">
+                    <button type="button" class="btn-back-step" onclick="goToStep(1)">← Back</button>
+                    <button type="button" class="btn-next-step" onclick="goToStep(3)">
+                        Continue to Interests
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="form-step" id="step3">
+                <div class="step-header">
+                    <span class="step-emoji">❤️</span>
+                    <div>
+                        <h2>Interests & Preferences</h2>
+                        <p>Tell us what drives you.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred work environment</label>
+                    <div class="select-wrap">
+                        <select name="work_env" required>
+                            <option value="">Select environment</option>
+                            <option value="office">Office / Corporate</option>
+                            <option value="remote">Remote / Freelance</option>
+                            <option value="outdoor">Outdoor / Field Work</option>
+                            <option value="lab">Lab / Research</option>
+                            <option value="hospital">Hospital / Clinical</option>
+                            <option value="creative_studio">Creative Studio</option>
+                        </select>
+                        <span class="select-arrow">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Activity you enjoy most</label>
+                    <div class="select-wrap">
+                        <select name="hobby" required>
+                            <option value="">Select activity</option>
+                            <option value="building_apps">Building apps / websites</option>
+                            <option value="analyzing_data">Analyzing data / numbers</option>
+                            <option value="helping_people">Helping / caring for people</option>
+                            <option value="designing">Drawing / designing</option>
+                            <option value="writing">Writing / storytelling</option>
+                            <option value="experimenting">Experimenting / inventing</option>
+                            <option value="teaching">Teaching / mentoring</option>
+                            <option value="debating">Debating / arguing cases</option>
+                            <option value="managing">Managing / organizing</option>
+                        </select>
+                        <span class="select-arrow">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What motivates you most in a career?</label>
+                    <div class="motivation-grid">
+                        <label class="motive-chip"><input type="radio" name="motivation" value="high_salary" required><span>💰 High Salary</span></label>
+                        <label class="motive-chip"><input type="radio" name="motivation" value="social_impact"><span>🌍 Social Impact</span></label>
+                        <label class="motive-chip"><input type="radio" name="motivation" value="creativity"><span>🎨 Creativity</span></label>
+                        <label class="motive-chip"><input type="radio" name="motivation" value="stability"><span>🏠 Stability</span></label>
+                        <label class="motive-chip"><input type="radio" name="motivation" value="innovation"><span>🚀 Innovation</span></label>
+                        <label class="motive-chip"><input type="radio" name="motivation" value="recognition"><span>⭐ Recognition</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your full name</label>
+                    <input type="text" name="student_name" placeholder="e.g. Rahul Sharma" required>
+                </div>
+
+                <div class="step-nav-row">
+                    <button type="button" class="btn-back-step" onclick="goToStep(2)">← Back</button>
+                    <button type="submit" class="btn-submit-final" id="submitBtn">
+                        <span id="submitText">🔍 Get My Career Report</span>
+                        <div class="btn-loader" id="btnLoader" style="display:none"></div>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">🎓 CareerAI</div>
+        <p class="footer-copy">© 2025 CareerAI. AI-Based Student Career Recommendation System</p>
+    </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - CareerAI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="bg-particles" id="bgParticles"></div>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <span class="logo-icon">🎓</span>
+            <span class="logo-text">Career<span class="logo-ai">AI</span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/assessment">Assessment</a></li>
+            <li><a href="/about" class="active">About</a></li>
+        </ul>
+        <a href="/assessment" class="nav-cta">Get Started</a>
+        <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+</nav>
+
+<div class="about-page">
+
+    <div class="about-hero fade-in-up">
+        <div class="about-hero-icon">🤖</div>
+        <h1>About <span class="gradient-text">CareerAI</span></h1>
+        <p>An intelligent, AI-powered career guidance system built for students of every background.</p>
+    </div>
+
+    <div class="about-body">
+
+        <div class="about-cards fade-in-up">
+            <div class="about-card">
+                <div class="ac-icon" style="background:#eef2ff;color:#4f46e5">🧠</div>
+                <h3>AI Engine</h3>
+                <p>Our weighted scoring algorithm ranks 12 career profiles against your unique academic and personal profile — in milliseconds.</p>
+            </div>
+            <div class="about-card">
+                <div class="ac-icon" style="background:#f0fdf4;color:#16a34a">📊</div>
+                <h3>Data-Driven</h3>
+                <p>Career profiles are modelled on real-world job market requirements, skill demands, and educational pathways.</p>
+            </div>
+            <div class="about-card">
+                <div class="ac-icon" style="background:#fff7ed;color:#ea580c">🔒</div>
+                <h3>Privacy First</h3>
+                <p>Zero data storage. Your assessment is processed in-memory and discarded after your results are displayed.</p>
+            </div>
+            <div class="about-card">
+                <div class="ac-icon" style="background:#fdf4ff;color:#a21caf">🎓</div>
+                <h3>Built for Students</h3>
+                <p>Designed for high school and university students who need structured, unbiased, and actionable career guidance.</p>
+            </div>
+        </div>
+
+        <!-- How the AI works -->
+        <div class="about-ai-section fade-in-up">
+            <h2>How the <span class="gradient-text">AI Engine</span> Works</h2>
+            <div class="ai-formula">
+                <div class="formula-box">
+                    <div class="formula-icon">🛠️</div>
+                    <div class="formula-label">Skills Score</div>
+                    <div class="formula-desc">60% of final score<br>Weighted per career</div>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-box">
+                    <div class="formula-icon">❤️</div>
+                    <div class="formula-label">Interest Bonuses</div>
+                    <div class="formula-desc">40% — subject,<br>hobby, environment</div>
+                </div>
+                <div class="formula-plus">+</div>
+                <div class="formula-box">
+                    <div class="formula-icon">📈</div>
+                    <div class="formula-label">GPA Boost</div>
+                    <div class="formula-desc">±3 points<br>for performance</div>
+                </div>
+                <div class="formula-eq">=</div>
+                <div class="formula-box result-box">
+                    <div class="formula-icon">🏆</div>
+                    <div class="formula-label">Match %</div>
+                    <div class="formula-desc">0–100 score<br>per career</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="about-tech fade-in-up">
+            <h2>Technology <span class="gradient-text">Stack</span></h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-logo">🐍</div>
+                    <div class="tech-name">Python 3</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">⚗️</div>
+                    <div class="tech-name">Flask</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">🌐</div>
+                    <div class="tech-name">HTML5</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">🎨</div>
+                    <div class="tech-name">CSS3</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">⚡</div>
+                    <div class="tech-name">JavaScript</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">🧩</div>
+                    <div class="tech-name">Jinja2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-banner fade-in-up" style="margin-top:2rem;">
+            <div class="cta-inner">
+                <div class="cta-glow"></div>
+                <h2>Ready to find your career?</h2>
+                <p>Free · Instant · No sign-up needed</p>
+                <a href="/assessment" class="btn-primary pulse-btn">Take the Assessment →</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">🎓 CareerAI</div>
+        <p>AI-Based Student Career Recommendation System</p>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/assessment">Assessment</a>
+            <a href="/about">About</a>
+        </div>
+        <p class="footer-copy">© 2025 CareerAI. Built with Python + Flask.</p>
+    </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

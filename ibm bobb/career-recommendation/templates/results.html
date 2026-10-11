@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Career Report - CareerAI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Confetti canvas -->
+<canvas id="confettiCanvas"></canvas>
+<div class="bg-particles" id="bgParticles"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <span class="logo-icon">🎓</span>
+            <span class="logo-text">Career<span class="logo-ai">AI</span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/assessment">Assessment</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        <a href="/assessment" class="nav-cta">Retake</a>
+        <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+</nav>
+
+<div class="results-page-wrap">
+
+    <!-- RESULTS HEADER -->
+    <div class="results-hero">
+        <div class="results-hero-bg"></div>
+        <div class="results-hero-content fade-in-up">
+            <div class="confetti-icon">🎉</div>
+            <h1>Your Career Report</h1>
+            <p>Hello <strong>{{ student_name }}</strong>! Here are your top career matches based on your assessment.</p>
+        </div>
+    </div>
+
+    <div class="results-body">
+
+        <!-- SKILL RADAR -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">📊 Your Skill Profile</h2>
+            <div class="skill-radar-grid">
+                <div class="skill-row">
+                    <div class="skill-name">🧠 Analytical</div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" data-width="{{ scores.analytical * 10 }}%" style="--clr:#4f46e5"></div>
+                    </div>
+                    <div class="skill-score">{{ scores.analytical }}/10</div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-name">💻 Coding</div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" data-width="{{ scores.coding * 10 }}%" style="--clr:#0ea5e9"></div>
+                    </div>
+                    <div class="skill-score">{{ scores.coding }}/10</div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-name">🗣️ Communication</div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" data-width="{{ scores.communication * 10 }}%" style="--clr:#22c55e"></div>
+                    </div>
+                    <div class="skill-score">{{ scores.communication }}/10</div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-name">🎨 Creativity</div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" data-width="{{ scores.creativity * 10 }}%" style="--clr:#f97316"></div>
+                    </div>
+                    <div class="skill-score">{{ scores.creativity }}/10</div>
+                </div>
+                <div class="skill-row">
+                    <div class="skill-name">🔬 Research</div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" data-width="{{ scores.research * 10 }}%" style="--clr:#a855f7"></div>
+                    </div>
+                    <div class="skill-score">{{ scores.research }}/10</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAREER CARDS -->
+        <div class="results-section">
+            <h2 class="results-section-title">🏆 Top Career Matches</h2>
+            <div class="results-cards-grid">
+                {% for career in recommendations %}
+                <div class="result-card neon-card fade-in-up {% if loop.index == 1 %}result-top{% endif %}" style="--delay:{{ loop.index * 0.1 }}s">
+
+                    {% if loop.index == 1 %}
+                    <div class="top-ribbon">⭐ Best Match</div>
+                    {% endif %}
+
+                    <div class="rc-top">
+                        <div class="rc-icon">{{ career.icon }}</div>
+                        <div class="rc-title-wrap">
+                            <h3>{{ career.title }}</h3>
+                            <div class="rc-rank">#{{ loop.index }} Match</div>
+                        </div>
+                        <div class="rc-pct-circle {% if loop.index == 1 %}pct-gold{% endif %}">
+                            <svg viewBox="0 0 60 60">
+                                <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e7ff" stroke-width="5"/>
+                                <circle cx="30" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="5"
+                                    stroke-dasharray="{{ (career.match / 100) * 150.8 }} 150.8"
+                                    stroke-linecap="round"
+                                    transform="rotate(-90 30 30)"/>
+                            </svg>
+                            <span>{{ career.match }}%</span>
+                        </div>
+                    </div>
+
+                    <div class="rc-match-bar-wrap">
+                        <div class="rc-match-bar" data-width="{{ career.match }}%"></div>
+                    </div>
+
+                    <p class="rc-desc">{{ career.description }}</p>
+
+                    <div class="rc-tags">
+                        {% for tag in career.skills %}
+                        <span class="rc-tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="rc-steps">
+                        <div class="rc-steps-title">🚀 Next Steps</div>
+                        <ul>
+                            {% for step in career.next_steps %}
+                            <li>{{ step }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- VIDEOS SECTION -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">🎬 Learn More — Curated Videos</h2>
+            <p class="videos-subtitle">Watch these handpicked videos to dive deeper into your top career matches.</p>
+
+            {% for career in recommendations %}
+            <div class="video-career-block fade-in-up" style="--delay:{{ loop.index * 0.1 }}s">
+                <div class="vcb-header">
+                    <span class="vcb-icon">{{ career.icon }}</span>
+                    <div class="vcb-title-wrap">
+                        <h3 class="vcb-title">{{ career.title }}</h3>
+                        <span class="vcb-match-badge">{{ career.match }}% Match</span>
+                    </div>
+                </div>
+                <div class="video-cards-row">
+                    {% for video in career.videos %}
+                    <div class="video-card">
+                        <div class="video-thumb-wrap">
+                            <img
+                                src="https://img.youtube.com/vi/{{ video.id }}/hqdefault.jpg"
+                                alt="{{ video.title }}"
+                                class="video-thumb"
+                                loading="lazy"
+                            >
+                            <div class="video-play-overlay">
+                                <div class="play-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Hidden iframe, revealed on click -->
+                            <iframe
+                                class="video-iframe"
+                                data-src="https://www.youtube-nocookie.com/embed/{{ video.id }}?autoplay=1&rel=0"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                style="display:none;"
+                            ></iframe>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">{{ video.title }}</div>
+                            <div class="video-channel">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="#ef4444"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C17 5 12 5 12 5s-5 0-7 .1c-.4.1-1.3.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.2.8C6.6 19 12 19 12 19s5 0 7-.1c.4-.1 1.3-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.8 14.4V9.6l5.4 2.4-5.4 2.4z"/></svg>
+                                {{ video.channel }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- ① COMPARISON CHART -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">📊 Career Match Comparison</h2>
+            <p class="videos-subtitle">How your top 5 career matches score against each other.</p>
+            <div class="comparison-chart-wrap">
+                {% for career in recommendations %}
+                <div class="cmp-row">
+                    <div class="cmp-label">
+                        <span class="cmp-icon">{{ career.icon }}</span>
+                        <span class="cmp-name">{{ career.title }}</span>
+                    </div>
+                    <div class="cmp-bar-track">
+                        <div class="cmp-bar-fill {% if loop.index == 1 %}cmp-best{% endif %}"
+                             data-width="{{ career.match }}%"
+                             style="--clr:{% if loop.index==1 %}#4f46e5{% elif loop.index==2 %}#7c3aed{% elif loop.index==3 %}#0ea5e9{% elif loop.index==4 %}#22c55e{% else %}#f97316{% endif %}">
+                        </div>
+                    </div>
+                    <div class="cmp-pct">{{ career.match }}%</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ② SALARY & MARKET INFO -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">💰 Salary & Job Market</h2>
+            <p class="videos-subtitle">Real-world earning potential and market demand for your top matches.</p>
+            <div class="salary-grid">
+                {% for career in recommendations %}
+                <div class="salary-card neon-card tilt-card">
+                    <div class="salary-card-head">
+                        <span class="salary-icon">{{ career.icon }}</span>
+                        <div>
+                            <div class="salary-title">{{ career.title }}</div>
+                            <div class="salary-demand" style="color:{{ career.salary.demand_clr }}">
+                                ● {{ career.salary.demand }} Demand
+                            </div>
+                        </div>
+                    </div>
+                    <div class="salary-stats">
+                        <div class="salary-stat">
+                            <div class="ss-label">🇮🇳 India Avg</div>
+                            <div class="ss-val">{{ career.salary.avg_salary }}</div>
+                        </div>
+                        <div class="salary-stat">
+                            <div class="ss-label">🌍 Global Avg</div>
+                            <div class="ss-val">{{ career.salary.global }}</div>
+                        </div>
+                        <div class="salary-stat">
+                            <div class="ss-label">📈 Job Growth</div>
+                            <div class="ss-val growth-val">{{ career.salary.growth }}</div>
+                        </div>
+                        <div class="salary-stat">
+                            <div class="ss-label">💼 Openings</div>
+                            <div class="ss-val">{{ career.salary.openings }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ③ TOP COURSES & CERTIFICATIONS -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">🎓 Top Courses & Certifications</h2>
+            <p class="videos-subtitle">Recommended online courses to kickstart or advance your career journey.</p>
+            {% for career in recommendations %}
+            <div class="course-career-block fade-in-up" style="--delay:{{ loop.index * 0.08 }}s">
+                <div class="vcb-header">
+                    <span class="vcb-icon">{{ career.icon }}</span>
+                    <div class="vcb-title-wrap">
+                        <h3 class="vcb-title">{{ career.title }}</h3>
+                        <span class="vcb-match-badge">{{ career.match }}% Match</span>
+                    </div>
+                </div>
+                <div class="courses-grid">
+                    {% for course in career.courses %}
+                    <a href="{{ course.url }}" target="_blank" rel="noopener" class="course-card">
+                        <div class="course-icon">{{ course.icon }}</div>
+                        <div class="course-info">
+                            <div class="course-name">{{ course.name }}</div>
+                            <div class="course-meta">
+                                <span class="course-platform">{{ course.platform }}</span>
+                                <span class="course-level level-{{ course.level | lower }}">{{ course.level }}</span>
+                            </div>
+                        </div>
+                        <div class="course-arrow">→</div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- ④ CAREER ROADMAP (top match) -->
+        <div class="results-section fade-in-up">
+            <h2 class="results-section-title">🗺️ Your Career Roadmap</h2>
+            <p class="videos-subtitle">Step-by-step path to becoming a <strong>{{ top_career }}</strong> — your #1 match.</p>
+            <div class="roadmap-wrap">
+                {% for phase in roadmap %}
+                <div class="roadmap-step fade-in-up" style="--delay:{{ loop.index * 0.12 }}s">
+                    <div class="roadmap-left">
+                        <div class="roadmap-icon-wrap">
+                            <span class="roadmap-icon">{{ phase.icon }}</span>
+                        </div>
+                        {% if not loop.last %}
+                        <div class="roadmap-line"></div>
+                        {% endif %}
+                    </div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-header">
+                            <span class="roadmap-phase">{{ phase.phase }}</span>
+                            <span class="roadmap-duration">⏱ {{ phase.duration }}</span>
+                        </div>
+                        <ul class="roadmap-tasks">
+                            {% for task in phase.tasks %}
+                            <li>{{ task }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ⑤ MOTIVATIONAL QUOTE -->
+        <div class="results-section fade-in-up">
+            <div class="quote-card">
+                <div class="quote-mark">"</div>
+                <blockquote class="quote-text">{{ quote.quote }}</blockquote>
+                <div class="quote-author">— {{ quote.author }}</div>
+                <div class="quote-career-tag">{{ recommendations[0].icon }} For aspiring {{ top_career }}s</div>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="results-actions fade-in-up">
+            <a href="/assessment" class="btn-primary">🔄 Retake Assessment</a>
+            <a href="/" class="btn-ghost">← Back to Home</a>
+            <button onclick="window.print()" class="btn-ghost">🖨️ Print Report</button>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">🎓 CareerAI</div>
+        <p>AI-Based Student Career Recommendation System</p>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/assessment">Assessment</a>
+            <a href="/about">About</a>
+        </div>
+        <p class="footer-copy">© 2025 CareerAI. Built with Python + Flask.</p>
+    </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
